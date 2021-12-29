@@ -11,7 +11,12 @@ def my_form():
 def my_form_post():
     text = request.form['text']
     try:
-        repository_list, number_of_stars, total_stars = get_all_data(text)
+        stars_in_repos, total_stars = get_all_data(text)
+        final = {}
+        final['username'] = text
+        final['repositories'] = stars_in_repos
+        final['total_stars'] = total_stars
+        final['used_languages'] = 'lang'
     except NoUserError:
         return "User not found."
-    return str(total_stars)
+    return final
