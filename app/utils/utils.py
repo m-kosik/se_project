@@ -1,8 +1,5 @@
-
-import re
 import requests
 from bs4 import BeautifulSoup
-import html5lib
 import urllib.request, json
 
 
@@ -48,11 +45,9 @@ def list_languages(repository_list):
             with urllib.request.urlopen('https://api.github.com/repos' + repo) as url:
                 data = json.loads(url.read().decode())
                 repo_size = float(data['size'])
-        except urllib.error.HTTPError as exception:
+        except urllib.error.HTTPError:
             is_limit = True
             repo_size = 0
-            print(exception)
-            print('Languages found in all repositories will be printed alphabetically.')
 
         temp_repo = requests.get('https://github.com/' + repo) 
         soup = BeautifulSoup(temp_repo.content,'html5lib')
@@ -61,18 +56,18 @@ def list_languages(repository_list):
         except AttributeError:
             print('There are no languages specified for repository ' + repo)
 
-        languages_in_bytes = {k: v*repo_size for k, v in languages_in_percent.items()}
+        if not is_limit:
+            languages_in_bytes = {k: v*repo_size for k, v in languages_in_percent.items()}
+            for language, size in languages_in_bytes.items():
+                try:
+                    total_language_use_in_bytes[language] += size
+                except KeyError:
+                    total_language_use_in_bytes[language] = size
+        else:
+            for language, _ in languages_in_percent.items():
+                total_language_use_in_bytes[language] = 'N/A (hourly limit reached)'
 
-        for language, size in languages_in_bytes.items():
-            try:
-                total_language_use_in_bytes[language] += size
-            except KeyError:
-                total_language_use_in_bytes[language] = size
-    
-    if is_limit:
-        return total_language_use_in_bytes
-    else:
-        return total_language_use_in_bytes
+    return total_language_use_in_bytes
     
 
 def find_used_languages_by_percent(soup):
