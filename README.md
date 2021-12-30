@@ -30,16 +30,16 @@ The repositories with corresponding star amounts and the total number of stargaz
   
 In the main screen, provide the username of the user you want to scan and determine whether you want to see the most used languages (type "y" for yes and "n" for no). Depending on the number of repositories that the selected user has published on his profile, this action can take from several seconds up to several minutes.  
   
-**WARNING**
+**WARNING**  
 Please note that there is an hourly limit imposed by GitHub on the API access.  
-After the limit is reached, the information will be obtained by scraping the GitHub profile of the user. Therefore, only the 30 first repositories together with the starcount in them will be listed. The list of used languages will only contain languages which have been used in those 30 repositories and will be printed without specifying their usage in bytes. Moreover, the statistics for organisation accounts (like Microsoft) will not be presented correctly.  
+After the limit is reached, the requested information will be obtained by scraping the GitHub profile of the user. Therefore, only the 30 first repositories together with the starcount in them will be listed. The list of used languages will only contain languages which have been used in those 30 repositories and will be printed without specifying their usage in bytes. Moreover, the statistics for organisation accounts (like Microsoft) will not be presented correctly.  
   
-The **output file** is in JSON format and it contains the following information:
-- `GH_limit_reached` - contains information whether the GitHub API access limit has been reached (`true`) or not (`false`)
-- `repositories` - a dictionary containing repository names as keys and the number of stars in each repository as corresponding value
-- `total_stars` - the total number of stars in all repositories
-- `used_languages` - a dictionary containing used languages as keys and the number of bytes of code written by the user in each language as corresponding values
-- `username` - the username of the user for which the search has been performed
+The **output file** is formatted as a JSON and it contains the following information:
+- `GH_limit_reached` - contains information whether the GitHub API access limit has been reached (`true`) or not (`false`),
+- `repositories` - a dictionary containing repository names as keys and the number of stars in each repository as corresponding values,
+- `total_stars` - the total number of stars in all repositories,
+- `used_languages` - a dictionary containing used languages as keys and the number of bytes of code written by the user in each language as corresponding values,
+- `username` - the username of the user for which the search has been performed.
   
   
 ### Ideas for further improvement
