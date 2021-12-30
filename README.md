@@ -12,7 +12,7 @@ This repository contains a web application, which allows to retrieve statistics 
 To run the app follow these steps:  
 1. Create a parent directory.  
 2. Create a virtual environment. It is recommended to use a virtual environment to avoid conflicts between various package versions.   
-To create a virtual evironment, you can follow [official Python documentation](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments).  
+To create a virtual evironment, you can follow [official Python documentation](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments). Please make sure you create an environment with Python 3.  
 3. Activate the virtual environment and install dependecies which are listed in `requirements.txt`.  
 4. Clone this repository into the parent directory.  
 5. Enter into the `app` directory (the same directory in which `user_stats.py` is located) and set up the name of the application to run to `user_stats`.  
