@@ -7,7 +7,7 @@ def get_all_data(username, show_languages):
 
     limit_reached = False
     try:
-        number_of_stars, total_stars = find_repositories_and_stars_from_api(username)
+        number_of_stars = find_repositories_and_stars_from_api(username)
         if show_languages:
             language_dict = list_languages_from_api(username, number_of_stars)  
         else: 
@@ -16,19 +16,17 @@ def get_all_data(username, show_languages):
     except GithubLimitReached:
         limit_reached = True
         try:
-            number_of_stars, total_stars = find_repositories_and_stars_without_api(username)
+            number_of_stars = find_repositories_and_stars_without_api(username)
             language_dict = list_languages_without_api(username, number_of_stars) if show_languages else {}
         except NoUserError:
             raise NoUserError
     
-    return number_of_stars, total_stars, language_dict, limit_reached
+    return number_of_stars, language_dict, limit_reached
 
 
 def find_repositories_and_stars_from_api(username):
 
     number_of_stars = {}
-    total_stars = 0
-
     try:
         with urllib.request.urlopen('https://api.github.com/users/' + username + '/repos') as url:
             data = json.loads(url.read().decode())
@@ -46,7 +44,7 @@ def find_repositories_and_stars_from_api(username):
     except urllib.error.HTTPError:
         raise GithubLimitReached
 
-    return number_of_stars, total_stars
+    return number_of_stars
 
 
 def list_languages_from_api(username, number_of_stars):
@@ -84,17 +82,15 @@ def find_repositories_and_stars_without_api(username):
         repo_name = repo.find('a').text.strip(' \n')
         number_of_stars[repo_name] = 0
 
-    total_stars = 0
     for element in soup.find_all('svg', {'aria-label': 'star'}):
         repo_name = element.parent['href'].split('/')[-2]
         stars = int(element.parent.text.strip('\n '))
         number_of_stars[repo_name] = stars
-        total_stars += stars
 
     for k,v in number_of_stars.items():
         print(f'{k} : {v}')
 
-    return number_of_stars, total_stars
+    return number_of_stars
 
 
 def list_languages_without_api(username, number_of_stars):  
