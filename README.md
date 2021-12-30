@@ -5,20 +5,21 @@ This repository contains a web application, which allows to retrieve statistics 
 - a list of repositories together with the number of stars (stargazers) in each repository, 
 - the total number of stars in all repositories, 
 - used languages, together with the number of bytes of code written by the user in each language.
-
-
+  
+  
 ### Instructions to run the app
-
+  
 To run the app follow these steps:  
 1. Create a parent directory.  
-2. Clone this repository into the parent directory.  
-3. Create a virtual environment. It is recommended to use a virtual environment to avoid conflicts between various package versions.   
-To create a virtual evironment, you can follow [official Python documentation](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments). Please make sure you create an environment with Python 3.  
-4. Activate the virtual environment and install dependecies which are listed in `requirements.txt`:
+2. Clone this repository into the parent directory, either using the Git command (recommended)    
+`git clone https://github.com/m-kosik/se_project.git`  
+or by downloading the repository manually as a ZIP file and extracting in the parent directory.  
+3. Create a virtual environment. It is recommended to use a virtual environment to avoid conflicts between various package versions. To create a virtual evironment, you can follow the [official Python documentation](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments). Please make sure you create an environment with Python 3.  
+4. Activate the virtual environment and install dependecies which are listed in `requirements.txt`:  
 `pip install -r requirements.txt` 
 5. Enter into the `app` directory (the same directory in which `user_stats.py` is located) and run the Python file `user_stats.py`:  
 `python3 user_stats.py` 
-7. Finally, open the address http://localhost:8080/ in your web browser. This is where you should find the app.
+7. Finally, open the address http://localhost:8080/ in your web browser. This is where you should find the app.  
   
   
 ### How to use the app?
