@@ -3,15 +3,19 @@ from bs4 import BeautifulSoup
 import urllib.request, json
 
 
-def get_all_data(username):
+def get_all_data(username, show_languages):
     
     try:
         number_of_stars, total_stars = find_repositories_and_stars_from_api(username)
-        language_dict = list_languages_from_api(username, number_of_stars)
+        if show_languages:
+            language_dict = list_languages_from_api(username, number_of_stars)  
+        else: 
+            language_dict = {}
+
     except GithubLimitReached:
         try:
             number_of_stars, total_stars = find_repositories_and_stars_without_api(username)
-            language_dict = list_languages_without_api(username, number_of_stars)
+            language_dict = list_languages_without_api(username, number_of_stars) if show_languages else {}
         except NoUserError:
             raise NoUserError
     
@@ -41,7 +45,8 @@ def list_languages_from_api(username, number_of_stars):
         try:
             with urllib.request.urlopen('https://api.github.com/repos/' + username + '/' + repo + '/languages') as url:
                 language_use_in_bytes = json.loads(url.read().decode())
-                for language, usage in language_use_in_bytes:
+                for language, usage in language_use_in_bytes.items():
+                    print(language_use_in_bytes)
                     try:
                         total_language_use_in_bytes[language] += usage
                     except KeyError:
