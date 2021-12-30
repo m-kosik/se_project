@@ -4,7 +4,8 @@ import urllib.request, json
 
 
 def get_all_data(username, show_languages):
-    
+
+    limit_reached = False
     try:
         number_of_stars, total_stars = find_repositories_and_stars_from_api(username)
         if show_languages:
@@ -13,13 +14,14 @@ def get_all_data(username, show_languages):
             language_dict = {}
 
     except GithubLimitReached:
+        limit_reached = True
         try:
             number_of_stars, total_stars = find_repositories_and_stars_without_api(username)
             language_dict = list_languages_without_api(username, number_of_stars) if show_languages else {}
         except NoUserError:
             raise NoUserError
     
-    return number_of_stars, total_stars, language_dict
+    return number_of_stars, total_stars, language_dict, limit_reached
 
 
 def find_repositories_and_stars_from_api(username):
@@ -30,7 +32,17 @@ def find_repositories_and_stars_from_api(username):
     try:
         with urllib.request.urlopen('https://api.github.com/users/' + username + '/repos') as url:
             data = json.loads(url.read().decode())
-            number_of_stars = { repo['name']:repo['stargazers_count'] for repo in data}
+            for repo in data:
+                number_of_stars[repo['name']] = repo['stargazers_count']
+            
+            page=1
+            while data:
+                page = page + 1
+                with urllib.request.urlopen('https://api.github.com/users/' + username + '/repos?page=' + str(page)) as url:
+                    data = json.loads(url.read().decode())
+                    for repo in data:
+                        number_of_stars[repo['name']] = repo['stargazers_count']
+
     except urllib.error.HTTPError:
         raise GithubLimitReached
 
