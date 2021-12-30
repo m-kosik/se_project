@@ -1,5 +1,7 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from utils.utils import User, NoUserError
+from waitress import serve
+import json
 
 app = Flask(__name__)
 
@@ -29,4 +31,6 @@ def my_form_post():
             final['used_languages'] = user.total_language_use_in_bytes
     except NoUserError:
         return "User not found."
-    return final
+    return render_template('result.html', result=json.dumps(final, sort_keys = False, indent = 2))
+
+serve(app, host='0.0.0.0', port=8080)
