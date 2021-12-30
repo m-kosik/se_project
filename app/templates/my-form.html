@@ -1,34 +1,39 @@
 <h2> Listing repositories, star count and used languages of a GitHub user </h2>
 
-<p> Below, provide the username you want to check and determine if you want to see the most used languages. <br>
-    Listing the languages takes significantly more time than just listing repositories. <br>
-    Depending on the number of repositories that the selected username has, this can take from several seconds up to several minutes. <br>
+<p> This web app allows you to print the repositories, total stargazers and used languages of a selected GitHub user. <br>
+    The repositories with corresponding star amounts and the total number of stargazers are always printed. <br>
+    Listing the languages takes significantly more time than just listing repositories, therefore it is optional. <br>
     <br>
-    Please also note, that there is an hourly limit imposed by GitHub on the API access. <br>
+    Below, provide the username you want to check and determine if you want to see the most used languages 
+    (type "y" for yes and "n" for no). <br>
+    Depending on the number of repositories that the selected user has published on his profile, 
+    this action can take from several seconds up to several minutes. <br>
+    <br>
+    Please note, that there is an hourly limit imposed by GitHub on the API access. <br>
     After the limit is reached, only a list of used languages will be printed without specifying their usage in bytes. <br>
-    Also, the entire search will become slower then.
-    <br>
+    Also, the entire search will become slower and the statistics for some accounts (e.g. big organizations like microsoft) 
+    will not be presented correctly. <br>
 </p>
 
     <form method="post" name="movie_edit">
     <div class="field">
-      <label for="title" class="label">Username</label>
+      <label for="username" class="label">Username</label>
       <div class="control">
         <input type="text" name="username" class="input" required="required"/>
       </div>
     </div>
 
     <div class="field">
-      <label for="year" class="label">Show languages? ("y" or "n")</label>
+      <label for="show" class="label"><br>Show languages? ("y" or "n")</label>
       <div class="control">
         <input type="text" name="show" class="input"/>
       </div>
     </div>
 
     <div class="field">
-        <label for="year" class="label"><br></label>
+        <label for="submit" class="label"><br></label>
         <div class="control">
-          <input type="submit" name="year" class="input"/>
+          <input type="submit" name="submit" class="input"/>
         </div>
       </div>
 
