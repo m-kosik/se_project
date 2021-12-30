@@ -8,7 +8,11 @@ This repository contains a web application written in Flask, which allows to pri
 2. Create a virtual evironment and activate it in the parent directory.
 3. Install the dependecies which are listed in requirements.txt (yml?).
 4. Clone the repo into the parent directory.
-5. $env:FLASK... something
+5. Set up the name of the application to run.  
+On Windows:
+`$env:FLASK_APP = 'user_stats'`
+On Linux:
+`export FLASK_APP = user_stats`
 6. flask run
 7. open the address http://127.0.0.1:5000/ in your web browser
 
