@@ -4,16 +4,61 @@ import urllib.request, json
 
 
 def get_all_data(username):
+    
+    try:
+        number_of_stars, total_stars = find_repositories_and_stars_from_api(username)
+        language_dict = list_languages_from_api(username, number_of_stars)
+    except GithubLimitReached:
+        try:
+            number_of_stars, total_stars = find_repositories_and_stars_without_api(username)
+            language_dict = list_languages_without_api(username, number_of_stars)
+        except NoUserError:
+            raise NoUserError
+    
+    return number_of_stars, total_stars, language_dict
+
+
+def find_repositories_and_stars_from_api(username):
+
+    number_of_stars = {}
+    total_stars = 0
+
+    try:
+        with urllib.request.urlopen('https://api.github.com/users/' + username + '/repos') as url:
+            data = json.loads(url.read().decode())
+            number_of_stars = { repo['name']:repo['stargazers_count'] for repo in data}
+    except urllib.error.HTTPError:
+        raise GithubLimitReached
+
+    return number_of_stars, total_stars
+
+
+def list_languages_from_api(username, number_of_stars):
+    
+    total_language_use_in_bytes = {}  
+    
+    for repo in number_of_stars.keys():
+        try:
+            with urllib.request.urlopen('https://api.github.com/repos/' + username + '/' + repo + '/languages') as url:
+                language_use_in_bytes = json.loads(url.read().decode())
+                for language, usage in language_use_in_bytes:
+                    try:
+                        total_language_use_in_bytes[language] += usage
+                    except KeyError:
+                        total_language_use_in_bytes[language] = usage
+        except urllib.error.HTTPError:
+            raise GithubLimitReached
+
+    return total_language_use_in_bytes
+
+
+def find_repositories_and_stars_without_api(username):
+
     repos = requests.get('https://github.com/' + username + '?tab=repositories') 
     if not repos.ok:
         raise NoUserError
     soup = BeautifulSoup(repos.content,'html5lib')
-    repository_list, number_of_stars, total_stars = find_repositories_and_stars(soup)
-    language_dict = list_languages(repository_list)
-    return number_of_stars, total_stars, language_dict
 
-
-def find_repositories_and_stars(soup):
     repository_list = []
     number_of_stars = {}
 
@@ -32,40 +77,24 @@ def find_repositories_and_stars(soup):
     for k,v in number_of_stars.items():
         print(f'{k} : {v}')
 
-    return repository_list, number_of_stars, total_stars
+    return number_of_stars, total_stars
 
 
-def list_languages(repository_list):  
+def list_languages_without_api(username, number_of_stars):  
 
-    is_limit = False
     total_language_use_in_bytes = {}
 
-    for repo in repository_list:
-        try:
-            with urllib.request.urlopen('https://api.github.com/repos' + repo) as url:
-                data = json.loads(url.read().decode())
-                repo_size = float(data['size'])
-        except urllib.error.HTTPError:
-            is_limit = True
-            repo_size = 0
+    for repo in number_of_stars.keys():
 
-        temp_repo = requests.get('https://github.com/' + repo) 
+        temp_repo = requests.get('https://github.com/' + username + '/' + repo) 
         soup = BeautifulSoup(temp_repo.content,'html5lib')
+
         try:
             languages_in_percent = find_used_languages_by_percent(soup)
-        except AttributeError:
-            print('There are no languages specified for repository ' + repo)
-
-        if not is_limit:
-            languages_in_bytes = {k: v*repo_size for k, v in languages_in_percent.items()}
-            for language, size in languages_in_bytes.items():
-                try:
-                    total_language_use_in_bytes[language] += size
-                except KeyError:
-                    total_language_use_in_bytes[language] = size
-        else:
             for language, _ in languages_in_percent.items():
                 total_language_use_in_bytes[language] = 'N/A (hourly limit reached)'
+        except AttributeError:
+            print('There are no languages specified for repository ' + repo)
 
     return total_language_use_in_bytes
     
@@ -83,4 +112,7 @@ def find_used_languages_by_percent(soup):
 
 
 class NoUserError(Exception):
+    pass
+
+class GithubLimitReached(Exception):
     pass
