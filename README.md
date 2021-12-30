@@ -11,20 +11,16 @@ This repository contains a web application, which allows to retrieve statistics 
 
 To run the app follow these steps:  
 1. Create a parent directory.  
-2. Create a virtual environment. It is recommended to use a virtual environment to avoid conflicts between various package versions.   
+2. Clone this repository into the parent directory.  
+3. Create a virtual environment. It is recommended to use a virtual environment to avoid conflicts between various package versions.   
 To create a virtual evironment, you can follow [official Python documentation](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments). Please make sure you create an environment with Python 3.  
-3. Activate the virtual environment and install dependecies which are listed in `requirements.txt`.  
-4. Clone this repository into the parent directory.  
-5. Enter into the `app` directory (the same directory in which `user_stats.py` is located) and set up the name of the application to run to `user_stats`.  
-On Windows (PowerShell) use the command:  
-`$env:FLASK_APP = 'user_stats'`  
-On Linux use the command:  
-`export FLASK_APP = user_stats`  
-6. Next, run the app using the following command:  
-`flask run`  
-7. Finally, open the address http://127.0.0.1:5000/ in your web browser (or any other address if you specified a different port, the address will be printed out in your terminal).  
+4. Activate the virtual environment and install dependecies which are listed in `requirements.txt`:
+`pip install -r requirements.txt` 
+5. Enter into the `app` directory (the same directory in which `user_stats.py` is located) and run the Python file `user_stats.py`:  
+`python3 user_stats.py` 
+7. Finally, open the address http://localhost:8080/ in your web browser. This is where you should find the app.
   
-
+  
 ### How to use the app?
   
 The repositories with corresponding star amounts and the total number of stargazers will always be printed in the output. Listing the languages takes significantly more time than just listing the repositories, therefore this functionality is optional.
