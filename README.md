@@ -26,10 +26,9 @@ On Linux use the command:
 
 ### How to use the app?
   
-The repositories with corresponding star amounts and the total number of stargazers are always printed. Listing the languages takes significantly more time than just listing repositories, therefore it is optional.  
+The repositories with corresponding star amounts and the total number of stargazers will always be printed in the output. Listing the languages takes significantly more time than just listing the repositories, therefore this functionality is optional.
   
-In the main screen, provide the username of the user you want to scan and determine if you want to see the most used languages (type "y" for yes and "n" for no).  
-Depending on the number of repositories that the selected user has published on his profile, this action can take from several seconds up to several minutes.  
+In the main screen, provide the username of the user you want to scan and determine whether you want to see the most used languages (type "y" for yes and "n" for no). Depending on the number of repositories that the selected user has published on his profile, this action can take from several seconds up to several minutes.  
   
 **WARNING**
 Please note that there is an hourly limit imposed by GitHub on the API access.  
