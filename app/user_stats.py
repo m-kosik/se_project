@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from utils.utils import *
+from utils.utils import User, NoUserError
 
 app = Flask(__name__)
 
@@ -18,15 +18,15 @@ def my_form_post():
     else:
         show_languages = False
     try:
-        stars_in_repos, language_dict, limit_reached = get_all_data(username, show_languages)
+        user = User(username, show_languages)
         final = {}
-        final['username'] = username
-        final['repositories'] = stars_in_repos
-        total_stars = sum([stars for _, stars in stars_in_repos.items()])
+        final['username'] = user.username
+        final['repositories'] = user.repositories_to_stars
+        total_stars = sum([stars for _, stars in user.repositories_to_stars.items()])
         final['total_stars'] = total_stars
-        final['GH_limit_reached'] = limit_reached
+        final['GH_limit_reached'] = user.limit_reached
         if show_languages:
-            final['used_languages'] = language_dict
+            final['used_languages'] = user.total_language_use_in_bytes
     except NoUserError:
         return "User not found."
     return final
