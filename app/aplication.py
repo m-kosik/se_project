@@ -9,14 +9,22 @@ def my_form():
 
 @app.route('/', methods=['POST'])
 def my_form_post():
-    text = request.form['text']
+
+    username = request.form['username']
+    show = request.form['show']
+
+    if show == 'y':
+        show_languages = True 
+    else:
+        show_languages = False
     try:
-        stars_in_repos, total_stars, language_dict = get_all_data(text)
+        stars_in_repos, total_stars, language_dict = get_all_data(username, show_languages)
         final = {}
-        final['username'] = text
+        final['username'] = username
         final['repositories'] = stars_in_repos
         final['total_stars'] = total_stars
-        final['used_languages'] = language_dict
+        if show_languages:
+            final['used_languages'] = language_dict
     except NoUserError:
         return "User not found."
     return final
