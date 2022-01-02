@@ -15,9 +15,9 @@ To run the app follow these steps:
 `git clone https://github.com/m-kosik/se_project.git`  
 or by downloading the repository manually as a ZIP file and extracting in the parent directory.  
 3. Create a virtual environment. It is recommended to use a virtual environment to avoid conflicts between various package versions. To create a virtual evironment, you can follow the [official Python documentation](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments). Please make sure you create an environment with Python 3.  
-4. Activate the virtual environment and install dependecies which are listed in `requirements.txt`:  
+4. Activate the virtual environment, enter the downloaded `se_project` directory and install dependecies which are listed in `requirements.txt` by typing:  
 `pip install -r requirements.txt` 
-5. Enter into the `app` directory (the same directory in which `user_stats.py` is located) and run the Python file `user_stats.py`:  
+5. Enter the `app` directory and run:   
 `python3 user_stats.py` 
 7. Finally, open the address http://localhost:8080/ in your web browser. This is where you should find the app.  
   
