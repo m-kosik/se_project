@@ -86,9 +86,6 @@ class User():
             stars = int(element.parent.text.strip('\n '))
             self.repositories_to_stars[repo_name] = stars
 
-        for k,v in self.repositories_to_stars.items():
-            print(f'{k} : {v}')
-
 
     def list_languages_without_api(self):  
 
