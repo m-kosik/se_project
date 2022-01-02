@@ -20,7 +20,8 @@ def my_form_post():
     else:
         show_languages = False
     try:
-        user = User(username, show_languages)
+        user = User(username)
+        user.get_all_data(show_languages)
         final = {}
         final['username'] = user.username
         final['GH_limit_reached'] = user.limit_reached

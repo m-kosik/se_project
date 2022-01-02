@@ -1,15 +1,14 @@
 from bs4 import BeautifulSoup
-from os import stat
 import requests
 import urllib.request, json
 
 class User():
-    def __init__(self, username, show_languages):
+    def __init__(self, username):
         self.username = username
         self.repositories_to_stars = {}
         self.limit_reached = False
         self.total_language_use_in_bytes = {}
-        self.get_all_data(show_languages)
+        #self.get_all_data(show_languages)
             
 
     def get_all_data(self, show_languages):
