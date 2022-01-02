@@ -39,11 +39,14 @@ def test_total_star_count():
 def test_language_retrieval():
     my_user = User('m-kosik')
     my_user.get_all_data(show_languages='y')
+    empty_user = User('alina-baranowska')
+    empty_user.get_all_data(show_languages='y')
     assert 'Python' in my_user.total_language_use_in_bytes.keys()
     assert 'Jupyter Notebook' in my_user.total_language_use_in_bytes.keys()
+    assert not empty_user.total_language_use_in_bytes
     
-def test_languages_from_empty_repo():
-    empty_repo = requests.get('https://github.com/alina-baranowska/Wine_quality_kaggle_challenge') 
-    soup = BeautifulSoup(empty_repo.content,'html5lib')
-    languages = User.find_used_languages_by_percent(soup)
-    assert not languages
+def test_language_listing_empty_repo():
+    with pytest.raises(AttributeError):   
+        empty_repo = requests.get('https://github.com/alina-baranowska/Wine_quality_kaggle_challenge') 
+        soup = BeautifulSoup(empty_repo.content,'html5lib')
+        languages = User.find_used_languages_by_percent(soup)

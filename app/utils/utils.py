@@ -112,7 +112,7 @@ class User():
                 percent_usage = float(element['aria-label'].rsplit(' ', 1)[1])
                 languages[language] = percent_usage
         except AttributeError:
-            print('Repository is empty.')
+            raise AttributeError
 
         return languages
 
