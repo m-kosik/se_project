@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template
 from utils.utils import User, NoUserError
 from waitress import serve
 import json
