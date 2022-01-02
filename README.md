@@ -19,6 +19,9 @@ or by downloading the repository manually as a ZIP file and extracting in the pa
 `pip install -r requirements.txt` 
 5. Enter the `app` directory and run:   
 `python3 user_stats.py` 
+if Python 3 is your default Python version or:
+`python3 user_stats.py` 
+to ensure the use of Python 3.  
 7. Finally, open the address http://localhost:8080/ in your web browser. This is where you should find the app.  
   
   
@@ -33,11 +36,11 @@ Please note that there is an hourly API access limit imposed by GitHub on unauth
 After the limit is reached, the requested information will be obtained by scraping the GitHub profile of the user. Therefore, only the 30 first repositories together with the starcount in them will be listed. The list of used languages will only contain languages which have been used in those 30 repositories and will be printed without specifying their usage in bytes. Moreover, the statistics for organisation accounts (like Microsoft) will not be presented correctly.  
   
 The **output file** is formatted as a JSON and it contains the following information:
+- `username` - the username of the user for which the search has been performed,
 - `GH_limit_reached` - contains information whether the GitHub API access limit has been reached (`true`) or not (`false`),
 - `repositories` - a dictionary containing repository names as keys and the number of stars in each repository as corresponding values,
 - `total_stars` - the total number of stars in all repositories,
-- `used_languages` - a dictionary containing used languages as keys and the number of bytes of code written by the user in each language as corresponding values,
-- `username` - the username of the user for which the search has been performed.
+- `used_languages` - a dictionary containing used languages as keys and the number of bytes of code written by the user in each language as corresponding values.
   
   
 ### Ideas for further improvement
