@@ -103,13 +103,16 @@ class User():
     @staticmethod
     def find_used_languages_by_percent(soup):
         languages = {}
-        header = soup.find(lambda elm: elm.name == "h2" and "Languages" in elm.text)
-        child = header.find_next_siblings()[0].find('span')
+        try:
+            header = soup.find(lambda elm: elm.name == "h2" and "Languages" in elm.text)
+            child = header.find_next_siblings()[0].find('span')
 
-        for element in child.find_all('span'):
-            language = element['aria-label'].rsplit(' ', 1)[0]
-            percent_usage = float(element['aria-label'].rsplit(' ', 1)[1])
-            languages[language] = percent_usage
+            for element in child.find_all('span'):
+                language = element['aria-label'].rsplit(' ', 1)[0]
+                percent_usage = float(element['aria-label'].rsplit(' ', 1)[1])
+                languages[language] = percent_usage
+        except AttributeError:
+            print('Repository is empty.')
 
         return languages
 
