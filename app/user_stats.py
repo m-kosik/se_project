@@ -1,7 +1,7 @@
-from flask import Flask, request, render_template
-from utils.utils import User, NoUserError
-from waitress import serve
 import json
+from flask import Flask, request, render_template
+from waitress import serve
+from utils.utils import User, NoUserError
 
 app = Flask(__name__)
 

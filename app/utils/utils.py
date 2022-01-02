@@ -1,6 +1,6 @@
+from bs4 import BeautifulSoup
 from os import stat
 import requests
-from bs4 import BeautifulSoup
 import urllib.request, json
 
 class User():
