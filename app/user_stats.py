@@ -1,7 +1,7 @@
 import json
 from flask import Flask, request, render_template
 from waitress import serve
-from utils.utils import User, NoUserError
+from utils.utils import User, NoUserError, count_total_stars
 
 app = Flask(__name__)
 
@@ -26,7 +26,7 @@ def my_form_post():
         final['username'] = user.username
         final['GH_limit_reached'] = user.limit_reached
         final['repositories'] = user.repositories_to_stars
-        total_stars = sum([stars for _, stars in user.repositories_to_stars.items()])
+        total_stars = count_total_stars(user.repositories_to_stars)
         final['total_stars'] = total_stars
         if show_languages:
             final['used_languages'] = user.total_language_use_in_bytes
