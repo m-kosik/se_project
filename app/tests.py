@@ -8,10 +8,10 @@ def test_real_user_intialization():
     assert my_user.username == 'm-kosik'
     assert my_user.limit_reached == False
 
-def test_nouser_exception():
+def test_no_user_exception():
     with pytest.raises(NoUserError):   
         my_user = User('very_weird_name_qwertyuiop')
-        my_user.get_all_data()
+        my_user.get_all_data(show_languages='n')
 
 def test_repo_retrieval():
     my_user = User('m-kosik')
