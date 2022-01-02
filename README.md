@@ -1,6 +1,3 @@
-# se_project
-
-## 
 This repository contains a web application, which allows to retrieve statistics of a selected GitHub user from the GitHub API, in particular:
 - a list of repositories together with the number of stars (stargazers) in each repository, 
 - the total number of stars in all repositories, 
